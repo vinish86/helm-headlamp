@@ -1,0 +1,24 @@
+# Artifact Hub package metadata for the Helm plugin
+# See: https://headlamp.dev/docs/latest/development/plugins/publishing
+
+version: 0.1.0
+name: helm-plugin
+displayName: Helm Plugin
+createdAt: "2026-03-25T06:39:43Z"
+logoURL: https://raw.githubusercontent.com/vinish86/helm-headlamp/main/img/helm.png
+description: View Helm release history (from Helm Secrets), compare manifests/values between revisions, and run rollback/uninstall actions from Headlamp.
+maintainers:
+  - name: Vinish Soman
+    email: vinish86@gmail.com
+provider:
+  name: Vinish Soman
+  annotations:
+    # Required: URL to the plugin tarball from a GitHub/GitLab/BitBucket release
+    headlamp/plugin/archive-url: https://github.com/vinish86/helm-headlamp/releases/download/v0.1.0/helm-plugin-0.1.0.tar.gz
+    # Required: SHA256 checksum (from `npm run package` output)
+    headlamp/plugin/archive-checksum: SHA256:779a4164d4f4b8250de5b9cacdd9b3ecb6f27e99227a76d88b085032e07cdc33
+    # Headlamp version compatibility (e.g., '>=0.29')
+    headlamp/plugin/version-compat: ">=0.29"
+    # Where the plugin can run: in-cluster, web, docker-desktop, desktop
+    headlamp/plugin/distro-compat: in-cluster,web,docker-desktop,desktop
+
