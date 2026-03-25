@@ -1,5 +1,7 @@
 # Headlamp Helm Plugin
 
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/helm-plugin)](https://artifacthub.io/packages/search?repo=helm-plugin)
+
 A Headlamp plugin for viewing and operating Helm releases directly from the Kubernetes API (via Headlamp `ApiProxy`), without requiring shell access to the `helm` CLI inside Headlamp.
 
 ## What this plugin provides
