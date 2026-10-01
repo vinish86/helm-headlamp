@@ -159,6 +159,7 @@ export interface ManifestResource {
   kind: string;
   name: string;
   namespace?: string;
+  resourcePolicy?: string;
 }
 
 export function parseManifest(manifest: string): ManifestResource[] {
@@ -170,7 +171,8 @@ export function parseManifest(manifest: string): ManifestResource[] {
     const kind = doc.match(/^kind:\s*(.+)$/m)?.[1]?.trim() ?? '';
     const name = doc.match(/^\s{0,4}name:\s*(.+)$/m)?.[1]?.trim() ?? '';
     const namespace = doc.match(/^\s{0,4}namespace:\s*(.+)$/m)?.[1]?.trim();
-    if (kind && name) resources.push({ apiVersion, kind, name, namespace });
+    const resourcePolicy = doc.match(/helm\.sh\/resource-policy:\s*["']?([^"'\s]+)["']?/m)?.[1]?.trim();
+    if (kind && name) resources.push({ apiVersion, kind, name, namespace, resourcePolicy });
   }
   return resources;
 }

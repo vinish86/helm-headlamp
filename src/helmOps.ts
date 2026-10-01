@@ -129,9 +129,11 @@ export async function helmUninstall(namespace: string, releaseName: string): Pro
   const release = await decodeRelease(latestSecret.data.release);
   const resources = parseManifest(release.manifest ?? '');
 
-  // 2. Delete each managed resource (404 = already gone, skip silently)
+  // 2. Delete each managed resource (404 = already gone, skip silently).
+  //    Resources annotated with `helm.sh/resource-policy: keep` are preserved, matching Helm's own uninstall behaviour.
   const errors: string[] = [];
   for (const r of resources) {
+    if (r.resourcePolicy === 'keep') continue;
     const url = resourceUrl(r.apiVersion, r.kind, r.namespace ?? namespace, r.name);
     try {
       await ApiProxy.request(url, { method: 'DELETE' });
@@ -222,6 +224,7 @@ export async function helmRollback(
   );
   for (const r of currentResources) {
     if (targetKeys.has(`${r.kind}/${r.name}`)) continue;
+    if (r.resourcePolicy === 'keep') continue; // respect helm.sh/resource-policy: keep
     const url = resourceUrl(r.apiVersion, r.kind, r.namespace ?? namespace, r.name);
     try {
       await ApiProxy.request(url, { method: 'DELETE' });
